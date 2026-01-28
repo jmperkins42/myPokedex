@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "datatables.net": "^2.3.6",
+    "datatables.net-bs5": "^2.3.6",
     "jquery": "^4.0.0"
   },
   "devDependencies": {
