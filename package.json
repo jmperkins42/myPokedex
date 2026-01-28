@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +14,8 @@
   "dependencies": {
     "datatables.net": "^2.3.6",
     "jquery": "^4.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1"
   }
 }
