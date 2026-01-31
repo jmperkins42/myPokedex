@@ -1,99 +1,114 @@
-🧢 myPokedex
+# 🧢 MyPokedex
 
-myPokedex is a modern, front-end web application that consumes the PokeAPI and presents Pokémon data in an interactive, searchable, and sortable table.
+**MyPokedex** is a modern, front-end web application that consumes the **PokeAPI** and presents Pokémon data in an interactive, searchable, and sortable table.
 
-This project was built to practice modern JavaScript, API consumption, and data-driven UI design, using industry-standard tooling and patterns.
+This project was built to practice **modern JavaScript**, **API consumption**, and **data-driven UI design**, using industry-standard tooling and patterns.
 
-🚀 Live Features
+---
 
-📊 Interactive DataTable with sorting, searching, and pagination
+## 🚀 Live Features
 
-🌐 Live data fetched from the PokeAPI
+- 📊 Interactive DataTable with sorting, searching, and pagination  
+- 🌐 Live data fetched from the [PokeAPI](https://pokeapi.co/)  
+- 🧬 Displays Pokémon types, abilities, and detailed base stats  
+- ⚡ Fast development workflow powered by **Vite**  
+- 🎨 Responsive UI using **Bootstrap 5**  
+- 🧠 Clean separation between data fetching and presentation logic  
 
-🧬 Displays Pokémon types, abilities, and detailed base stats
+---
 
-⚡ Fast development workflow powered by Vite
+## 🛠 Tech Stack
 
-🎨 Responsive UI using Bootstrap 5
+- **Vite** — modern dev server and build tool  
+- **JavaScript (ES Modules)** — clean, modular code structure  
+- **jQuery + DataTables** — robust table functionality  
+- **Bootstrap 5** — responsive layout and styling  
+- **PokeAPI** — public REST API for Pokémon data  
 
-🧠 Clean separation between data fetching and presentation logic
+---
 
-🛠 Tech Stack
+## 📦 Getting Started
 
-Vite — modern dev server and build tool
-
-JavaScript (ES Modules) — clean, modular code structure
-
-jQuery + DataTables — robust table functionality
-
-Bootstrap 5 — responsive layout and styling
-
-PokeAPI — public REST API for Pokémon data
-
-📦 Getting Started
-1️⃣ Install dependencies
+### 1️⃣ Install dependencies
+```bash
 npm install
+```
 
-2️⃣ Run the development server
+### 2️⃣ Run the development server
+```bash
 npm run dev
+```
 
-3️⃣ Open in browser
+### 3️⃣ Open in browser
+```bash
 http://localhost:5173
+```
 
-🧠 Application Architecture
+---
+
+## 🧠 Application Architecture
 
 At a high level, the application works as follows:
 
-Pokémon references are fetched from the PokeAPI using its paginated list endpoint
+1. Pokémon references are fetched from the PokeAPI using its paginated list endpoint
 
-Individual Pokémon detail endpoints are requested as needed
+2. Individual Pokémon detail endpoints are requested as needed
 
-Relevant fields are normalized into a consistent data structure
+3. Relevant fields are normalized into a consistent data structure
 
-Rows are dynamically inserted into a DataTable instance
+4. Rows are dynamically inserted into a DataTable instance
 
-DataTables handles UI concerns such as sorting, searching, and pagination
+5. DataTables handles UI concerns such as sorting, searching, and pagination
 
 This approach keeps data logic separate from UI logic, making the application easier to scale and refactor.
 
-📊 Data Displayed
-Column	Description
-#	Pokédex ID
-Name	Pokémon name
-Type	Primary and secondary types
-Abilities	Pokémon abilities
-HP	Base HP stat
-ATK	Base Attack stat
-DEF	Base Defense stat
-SpA	Base Special Attack stat
-SpD	Base Special Defense stat
-Spe	Base Speed stat
+---
+
+## 📊 Data Displayed
+| Column | Description |
+|------|-----------|
+| #	| Pokédex ID |
+| Name | Pokémon name |
+| Type | Primary and secondary types |
+|Abilities | Pokémon abilities |
+| HP | Base HP stat |
+| ATK | Base Attack stat |
+|DEF | Base Defense stat |
+|SpA | Base Special Attack stat |
+|SpD | Base Special Defense stat |
+|Spe | Base Speed stat |
 
 Base stats are implemented as real columns (not embedded text), allowing for proper sorting and filtering.
 
-🎯 Project Goals
+---
 
-Practice working with external REST APIs
+## 🎯 Project Goals
 
-Apply modern JavaScript (ES6+) patterns
+- Practice working with external REST APIs
 
-Learn proper data modeling for UI components
+- Apply modern JavaScript (ES6+) patterns
 
-Build a clean, extensible front-end project suitable for a portfolio
+- Learn proper data modeling for UI components
 
-🔮 Possible Enhancements
+- Build a clean, extensible front-end project suitable for a portfolio
 
-Generation and region filtering
+---
 
-Stat-based column filters (e.g., HP > 100)
+## 🔮 Possible Enhancements
 
-Type badges with color coding
+- Generation and region filtering
 
-Lazy loading or batched API requests
+- Stat-based column filters (e.g., HP > 100)
 
-Pokémon detail modal view
+- Type badges with color coding
 
-📜 Disclaimer
+- Lazy loading or batched API requests
+
+- Pokémon detail modal view
+
+---
+
+## 📜 Disclaimer
 
 Pokémon and Pokémon character names are trademarks of Nintendo.
 This project is for educational and portfolio purposes only.
