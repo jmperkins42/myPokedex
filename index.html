@@ -14,21 +14,26 @@
                 <h1>MyPokedex :)</h1>
             </div>
             <div class="card-body">
-                <table id="tblPokemon">
+                <table id="tblPokemon" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Abilities</th>
-                            <th>Base stats</th>
+                            <th rowspan="2">#</th>
+                            <th rowspan="2">Name</th>
+                            <th rowspan="2">Type</th>
+                            <th rowspan="2">Abilities</th>
+                            <th colspan="6" class="text-center">Base Stats</th>
+                        </tr>
+                        <tr>
+                            <th>HP</th>
+                            <th>ATK</th>
+                            <th>DEF</th>
+                            <th>SpA</th>
+                            <th>SpD</th>
+                            <th>Spe</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                
             </div>
         </div>
     </div>
