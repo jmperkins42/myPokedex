@@ -23,28 +23,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     allPokemon.push(...data.results);
     url = data.next;
   }
-  // grab the first pokemon
-  const pokemonRef = allPokemon[0];
-  const res = await fetch(pokemonRef.url);
-  const pokemon = await res.json();
-  // using map to get base stat data
-  const statMap = Object.fromEntries(
-    pokemon.stats.map(s => [s.stat.name, s.base_stat])
-  );
-  // since the dataTable already exists, we can add a row this way rather than adding to the HTML
-  table.row.add([
-    pokemon.id.toString().padStart(3, '0'),
-    pokemon.name,
-    pokemon.types.map(t => t.type.name).join(', '),
-    pokemon.abilities.map(a => a.ability.name).join(', '),
+  // loop through all the pokemon and add them to the table one by one
+  for (let i = 0; i < allPokemon.length; i++)
+  {
+    const pokemonRef = allPokemon[i];
+    const res = await fetch(pokemonRef.url);
+    const pokemon = await res.json();
+    // using map to get base stat data
+    const statMap = Object.fromEntries(
+      pokemon.stats.map(s => [s.stat.name, s.base_stat])
+    );
+    // since the dataTable already exists, we can add a row this way rather than adding to the HTML
+    table.row.add([
+      pokemon.id,
+      pokemon.name,
+      pokemon.types.map(t => t.type.name).join(', '),
+      pokemon.abilities.map(a => a.ability.name).join(', '),
 
-    statMap.hp,
-    statMap.attack,
-    statMap.defense,
-    statMap['special-attack'],
-    statMap['special-defense'],
-    statMap.speed
-  ]).draw();
-  
+      statMap.hp,
+      statMap.attack,
+      statMap.defense,
+      statMap['special-attack'],
+      statMap['special-defense'],
+      statMap.speed
+    ]).draw();
+  }
 });
 
