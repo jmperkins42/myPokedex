@@ -23,8 +23,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     allPokemon.push(...data.results);
     url = data.next;
   }
+
+  /*
+    at this point, i need to decide what the automatic display will be,
+    and how i want to implement the buttons
+  */
+
+
   // loop through all the pokemon and add them to the table one by one
-  for (let i = 0; i < allPokemon.length; i++)
+  // 1025 is the # of individual pokemon according to serebii
+  for (let i = 0; i < 1025; i++)
   {
     const pokemonRef = allPokemon[i];
     const res = await fetch(pokemonRef.url);
