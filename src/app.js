@@ -24,12 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     url = data.next;
   }
 
-  /*
-    at this point, i need to decide what the automatic display will be,
-    and how i want to implement the buttons
-  */
-
-
+  
   // loop through all the pokemon and add them to the table one by one
   // 1025 is the # of individual pokemon according to serebii
   for (let i = 0; i < 1025; i++)
