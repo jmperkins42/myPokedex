@@ -3,6 +3,10 @@ import $ from 'jquery';
 import 'datatables.net-bs5';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 
+// fetch calls to pokeapi grabbing the first pokemon
+  let url = 'https://pokeapi.co/api/v2/pokemon?limit=100';
+  let allPokemon = [];   
+
 // things that need to happen on page load
 document.addEventListener('DOMContentLoaded', async () => {
   // creates dataTable
@@ -11,10 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     searching: true,
     ordering: true
   });
-  
-  // fetch calls to pokeapi grabbing the first pokemon
-  let url = 'https://pokeapi.co/api/v2/pokemon?limit=100';
-  const allPokemon = [];
 
   while (url) {
     const res = await fetch(url);
@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  allPokemon = detailedPokemon
+
   // initial table creation
   refreshTable(detailedPokemon);
 
@@ -73,65 +75,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     table.clear().rows.add(rows).draw();
   }
 
-});
+  document.getElementById('applyFilters').addEventListener('click', () => {
+    // gets generation
+    filters.generation = Number(document.getElementById('genFilter').value);
 
-// before filtering, making sure every object looks the same
-function normalizePokemon(pokemon) {
-  return {
-    id: pokemon.id,
-    name: pokemon.name,
-    types: pokemon.types.map(t => t.type.name),
-    abilities: pokemon.abilities.map(a => a.ability.name),
-    stats: {
-      hp: pokemon.stats.find(s => s.stat.name === 'hp').base_stat,
-      atk: pokemon.stats.find(s => s.stat.name === 'attack').base_stat,
-      def: pokemon.stats.find(s => s.stat.name === 'defense').base_stat,
-      spa: pokemon.stats.find(s => s.stat.name === 'special-attack').base_stat,
-      spd: pokemon.stats.find(s => s.stat.name === 'special-defense').base_stat,
-      spe: pokemon.stats.find(s => s.stat.name === 'speed').base_stat
-    }
-  };
-}
+    // selected types
+    filters.types = Array.from(
+      document.getElementById('typeFilter').selectedOptions
+    ).map(o => o.value);
 
-// filter state object
-const filters = {
-  generation: 9,
-  types: [],
-  stats: {
-    hp: { min: null, max: null },
-    atk: { min: null, max: null },
-    def: { min: null, max: null },
-    spa: { min: null, max: null },
-    spd: { min: null, max: null },
-    spe: { min: null, max: null }
-  }
-};
+    // gets max or mins
+    filters.stats.hp.min = getNumber('hpMin');
+    filters.stats.hp.max = getNumber('hpMax');
+    filters.stats.atk.min = getNumber('atkMin');
+    filters.stats.atk.max = getNumber('atkMax');
+    filters.stats.def.min = getNumber('defMin');
+    filters.stats.def.max = getNumber('defMax');
+    filters.stats.spa.min = getNumber('spaMin');
+    filters.stats.spa.max = getNumber('spaMax');
+    filters.stats.spd.min = getNumber('spdMin');
+    filters.stats.spd.max = getNumber('spdMax');
+    filters.stats.spe.min = getNumber('speMin');
+    filters.stats.spe.max = getNumber('speMax');
+    
 
-document.getElementById('applyFilters').addEventListener('click', () => {
-  // gets generation
-  filters.generation = Number(document.getElementById('genFilter').value);
+    applyFilters();
+  });
 
-  // selected types
-  filters.types = Array.from(
-    document.getElementById('typeFilter').selectedOptions
-  ).map(o => o.value);
-
-  // gets max or mins
-  filters.stats.hp.min = getNumber('hpMin');
-  filters.stats.hp.max = getNumber('hpMax');
-  filters.stats.atk.min = getNumber('atkMin');
-  filters.stats.atk.max = getNumber('atkMax');
-  filters.stats.def.min = getNumber('defMin');
-  filters.stats.def.max = getNumber('defMax');
-  filters.stats.spa.min = getNumber('spaMin');
-  filters.stats.spa.max = getNumber('spaMax');
-  filters.stats.spd.min = getNumber('spdMin');
-  filters.stats.spd.max = getNumber('spdMax');
-  filters.stats.spe.min = getNumber('speMin');
-  filters.stats.spe.max = getNumber('speMax');
-  
-
-  applyFilters();
 });
 
 function getNumber(id) {
@@ -143,9 +113,9 @@ function applyFilters() {
   const filtered = allPokemon.filter(p => {
 
     // Generation
-    if (filters.generation && p.generation !== filters.generation) {
-      return false;
-    }
+    // if (filters.generation && p.generation !== filters.generation) {
+    //   return false;
+    // }
 
     // Types (AND logic)
     if (filters.types.length > 0) {
@@ -167,6 +137,22 @@ function applyFilters() {
 
   refreshTable(filtered);
 }
+
+// filter state object
+const filters = {
+  generation: 9,
+  types: [],
+  stats: {
+    hp: { min: null, max: null },
+    atk: { min: null, max: null },
+    def: { min: null, max: null },
+    spa: { min: null, max: null },
+    spd: { min: null, max: null },
+    spe: { min: null, max: null }
+  }
+};
+
+
 
 
 
