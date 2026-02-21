@@ -6,12 +6,152 @@
     <title>MyPokedex</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body class="bg-danger">
     <div class="d-flex justify-content-center py-5">
         <div class="card col-10 col-lg-8">
             <div class="card-header">
                 <h1>MyPokedex :)</h1>
+                <button 
+                    class="btn btn-outline-primary mt-2" 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#filterPanel">
+                    Filters
+                </button>
+                <div class="offcanvas offcanvas-start" id="filterPanel">
+                    <div class="offcanvas-header">
+                        <h5>Filters</h5>
+                        <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <!-- Filtering for generation -->
+                        <div class="d-flex col-6 mb-3">
+                            <select id="genFilter" class="form-select">
+                                <option value="1">Gen I</option>
+                                <option value="2">Gen II</option>
+                                <option value="3">Gen III</option>
+                                <option value="4">Gen IV</option>
+                                <option value="5">Gen V</option>
+                                <option value="6">Gen VI</option>
+                                <option value="7">Gen VII</option>
+                                <option value="8">Gen VIII</option>
+                                <option value="9" selected>Gen IX</option>
+                            </select>
+                        </div>
+                        <hr/>
+                        <!-- Type filtering -->
+                        <div id="typeFilter" class="type-grid">
+                          <label class="type-pill normal">
+                            <input type="checkbox" value="normal">
+                            <span>Normal</span>
+                          </label>
+                          <label class="type-pill fire">
+                            <input type="checkbox" value="fire">
+                            <span>Fire</span>
+                          </label>
+                          <label class="type-pill water">
+                            <input type="checkbox" value="water">
+                            <span>Water</span>
+                          </label>
+                          <label class="type-pill electric">
+                            <input type="checkbox" value="electric">
+                            <span>Electric</span>
+                          </label>
+                          <label class="type-pill grass">
+                            <input type="checkbox" value="grass">
+                            <span>Grass</span>
+                          </label>
+                          <label class="type-pill ice">
+                            <input type="checkbox" value="ice">
+                            <span>Ice</span>
+                          </label>
+                          <label class="type-pill fighting">
+                            <input type="checkbox" value="fighting">
+                            <span>Fighting</span>
+                          </label>
+                          <label class="type-pill poison">
+                            <input type="checkbox" value="poison">
+                            <span>Poison</span>
+                          </label>
+                          <label class="type-pill ground">
+                            <input type="checkbox" value="ground">
+                            <span>Ground</span>
+                          </label>
+                          <label class="type-pill flying">
+                            <input type="checkbox" value="flying">
+                            <span>Flying</span>
+                          </label>
+                          <label class="type-pill psychic">
+                            <input type="checkbox" value="psychic">
+                            <span>Psychic</span>
+                          </label>
+                          <label class="type-pill bug">
+                            <input type="checkbox" value="bug">
+                            <span>Bug</span>
+                          </label>
+                          <label class="type-pill rock">
+                            <input type="checkbox" value="rock">
+                            <span>Rock</span>
+                          </label>
+                          <label class="type-pill ghost">
+                            <input type="checkbox" value="ghost">
+                            <span>Ghost</span>
+                          </label>
+                          <label class="type-pill dragon">
+                            <input type="checkbox" value="dragon">
+                            <span>Dragon</span>
+                          </label>
+                          <label class="type-pill dark">
+                            <input type="checkbox" value="dark">
+                            <span>Dark</span>
+                          </label>
+                          <label class="type-pill steel">
+                            <input type="checkbox" value="steel">
+                            <span>Steel</span>
+                          </label>
+                          <label class="type-pill fairy">
+                            <input type="checkbox" value="fairy">
+                            <span>Fairy</span>
+                          </label>
+                        </div>
+                        <hr/>
+                        <!-- Filter using ranges for base stats (min and max) -->
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="hpMin" class="form-control" placeholder="HP min">
+                            <input type="number" id="hpMax" class="form-control" placeholder="HP max">
+                        </div>
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="atkMin" class="form-control" placeholder="ATK min">
+                            <input type="number" id="atkMax" class="form-control" placeholder="ATK max">
+                        </div>
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="defMin" class="form-control" placeholder="DEF min">
+                            <input type="number" id="defMax" class="form-control" placeholder="DEF max">
+                        </div>
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="spaMin" class="form-control" placeholder="SpA min">
+                            <input type="number" id="spaMax" class="form-control" placeholder="SpA max">
+                        </div>
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="spdMin" class="form-control" placeholder="SpD min">
+                            <input type="number" id="spdMax" class="form-control" placeholder="SpD max">
+                        </div>
+                        <div class="d-flex gap-2 col-10 mb-2">
+                            <input type="number" id="speMin" class="form-control" placeholder="Spe min">
+                            <input type="number" id="speMax" class="form-control" placeholder="Spe max">
+                        </div>
+                        <hr/>
+                        <!-- Apply filters -->
+                        <button 
+                            id="applyFilters" 
+                            class="btn btn-primary w-100" 
+                            data-bs-toggle="offcanvas" 
+                            data-bs-target="#filterPanel">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
