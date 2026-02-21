@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // since the dataTable already exists, we can add a row this way rather than adding to the HTML
     detailedPokemon.push({
       id: pokemon.id,
-      name: pokemon.name,
+      name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1), // capitalize first letter
       types: pokemon.types.map(t => t.type.name),
       abilities: pokemon.abilities.map(a => a.ability.name),
       stats: {
@@ -56,12 +56,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // need clarification on this one,
-  // what is the point of setting allpokemon to detialed pokemon?
-  // i thought the point of detailed pokemon was to carry the details of the pokemon
-  // it seems like a waste of a variable
-  // but im realizing that it might be because of scope
-  allPokemon = detailedPokemon 
+  // fixes scope issues with the filter function and allows us to 
+  // keep all the pokemon data in memory for filtering
+  allPokemon = detailedPokemon;
 
   function refreshTable(pokemonList) {
     const rows = pokemonList.map(p => [
@@ -80,34 +77,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     table.clear().rows.add(rows).draw();
   }
 
+  // populate table initially after data is loaded
+  refreshTable(allPokemon);
+
   function applyFilters(){
     const maxNum = getGenMax(filters.generation)
     const filtered = allPokemon.filter(p => {
-      
-      //entirety of filtering probably needs editing
 
-      // generation should be filtered by #,
-      // meaning when Gen IX is selected, all 1025 pokemon are visible,
-      // but when VIII is selected, only 905 are visible, etc.,
-      // all the way down to Gen I selected, only the orignal 151.
-      
+      // Generation based on maxNum which is determined by the generation filter
       if (p.id > maxNum){
         return false;
       }
 
-      // the logic I want implemented here is when nothing is selected,
-      // there will be all types, and then if one or two is selected,
-      // the typing is filtered on one or both of those. ideally,
-      // there can't be more than two selected
-      // also,the mulitiple select list is unintuitive so i will be changing the UI
-
-      // Types (AND logic)
+      // Types
       if (filters.types.length > 0) {
         const hasAllTypes = filters.types.every(t => p.types.includes(t));
         if (!hasAllTypes) return false;
       }
-      
-      // this appears to be correct
 
       // Stats
       for (const stat in filters.stats){
