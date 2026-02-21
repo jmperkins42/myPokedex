@@ -63,9 +63,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   // but im realizing that it might be because of scope
   allPokemon = detailedPokemon 
 
-  // initial table creation
-  refreshTable(allPokemon);
-
   function refreshTable(pokemonList) {
     const rows = pokemonList.map(p => [
       p.id.toString().padStart(3, '0'),
@@ -83,14 +80,58 @@ document.addEventListener('DOMContentLoaded', async () => {
     table.clear().rows.add(rows).draw();
   }
 
+  function applyFilters(){
+    const maxNum = getGenMax(filters.generation)
+    const filtered = allPokemon.filter(p => {
+      
+      //entirety of filtering probably needs editing
+
+      // generation should be filtered by #,
+      // meaning when Gen IX is selected, all 1025 pokemon are visible,
+      // but when VIII is selected, only 905 are visible, etc.,
+      // all the way down to Gen I selected, only the orignal 151.
+      
+      if (p.id > maxNum){
+        return false;
+      }
+
+      // the logic I want implemented here is when nothing is selected,
+      // there will be all types, and then if one or two is selected,
+      // the typing is filtered on one or both of those. ideally,
+      // there can't be more than two selected
+      // also,the mulitiple select list is unintuitive so i will be changing the UI
+
+      // Types (AND logic)
+      if (filters.types.length > 0) {
+        const hasAllTypes = filters.types.every(t => p.types.includes(t));
+        if (!hasAllTypes) return false;
+      }
+      
+      // this appears to be correct
+
+      // Stats
+      for (const stat in filters.stats){
+        const { min, max } = filters.stats[stat];
+        const value = p.stats[stat];
+
+        if (min !== null && value < min) return false;
+        if (max !== null && value > max) return false;
+      }
+      
+      return true;
+    });
+
+    refreshTable(filtered);
+  }
+
   document.getElementById('applyFilters').addEventListener('click', () => {
     // gets generation
     filters.generation = Number(document.getElementById('genFilter').value);
 
     // selected types
     filters.types = Array.from(
-      document.getElementById('typeFilter').selectedOptions
-    ).map(o => o.value);
+      document.querySelectorAll('#typeFilter input:checked')
+    ).map(cb => cb.value);
 
     // gets max or mins
     filters.stats.hp.min = getNumber('hpMin');
@@ -110,55 +151,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     applyFilters();
   });
 
+  // Limit type selection to maximum of 2
+  document.getElementById('typeFilter').addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox') {
+      const allCheckboxes = document.querySelectorAll('#typeFilter input[type="checkbox"]');
+      const checkedBoxes = document.querySelectorAll('#typeFilter input[type="checkbox"]:checked');
+      
+      if (checkedBoxes.length >= 2) {
+        // Disable unchecked checkboxes when 2 are selected
+        allCheckboxes.forEach(checkbox => {
+          if (!checkbox.checked) {
+            checkbox.disabled = true;
+            checkbox.parentElement.style.opacity = '0.4';
+          }
+        });
+      } else {
+        // Re-enable all checkboxes when fewer than 2 are selected
+        allCheckboxes.forEach(checkbox => {
+          checkbox.disabled = false;
+          checkbox.parentElement.style.opacity = '1';
+        });
+      }
+    }
+  });
+
 });
 
-function getNumber(id) {
+function getNumber(id){
   const val = document.getElementById(id).value;
   return val === '' ? null : Number(val);
 }
 
-function applyFilters() {
-  const filtered = allPokemon.filter(p => {
-    
-    //entirety of filtering probably needs editing
-
-    // generation should be filtered by #,
-    // meaning when Gen IX is selected, all 1025 pokemon are visible,
-    // but when VIII is selected, only 905 are visible, etc.,
-    // all the way down to Gen I selected, only the orignal 151.
-    
-    /*
-    //Generation
-    if (filters.generation && p.generation !== filters.generation) {
-      return false;
-    }
-
-    // the logic I want implemented here is when nothing is selected,
-    // there will be all types, and then if one or two is selected,
-    // the typing is filtered on one or both of those. ideally,
-    // there can't be more than two selected
-
-    // Types (AND logic)
-    if (filters.types.length > 0) {
-      const hasAllTypes = filters.types.every(t => p.types.includes(t));
-      if (!hasAllTypes) return false;
-    }
-
-    // this appears to be correct
-
-    // Stats
-    for (const stat in filters.stats) {
-      const { min, max } = filters.stats[stat];
-      const value = p.stats[stat];
-
-      if (min !== null && value < min) return false;
-      if (max !== null && value > max) return false;
-    }
-    */
-    return true;
-  });
-
-  refreshTable(filtered);
+function getGenMax(gen){
+  switch(gen){
+    case 9:
+      return 1025;
+    case 8: 
+      return 905;
+    case 7:
+      return 809;
+    case 6:
+      return 721;
+    case 5:
+      return 649;
+    case 4:
+      return 493;
+    case 3:
+      return 386;
+    case 2:
+      return 251;
+    case 1:
+      return 151;
+    default:
+      return 1025;
+  }
 }
 
 // filter state object

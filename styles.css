@@ -1,0 +1,65 @@
+/* Layout */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+/* Pill base style */
+.type-pill {
+  cursor: pointer;
+  text-align: center;
+}
+
+.type-pill input {
+  display: none;
+}
+
+.type-pill span {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  color: white;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  opacity: 0.6;
+}
+
+/* Hover effect */
+.type-pill:hover span {
+  transform: scale(1.05);
+}
+
+/* Checked effect */
+.type-pill input:checked + span {
+  opacity: 1;
+  box-shadow: 0 0 0 2px #000 inset;
+}
+
+/* Disabled effect */
+.type-pill input:disabled {
+  cursor: not-allowed;
+}
+
+.type-pill input:disabled + span {
+  cursor: not-allowed;
+}
+
+.normal span { background: #A8A77A; }
+.fire span { background: #EE8130; }
+.water span { background: #6390F0; }
+.electric span { background: #F7D02C; color: #000; }
+.grass span { background: #7AC74C; }
+.ice span { background: #96D9D6; color: #000; }
+.fighting span { background: #C22E28; }
+.poison span { background: #A33EA1; }
+.ground span { background: #E2BF65; color: #000; }
+.flying span { background: #A98FF3; }
+.psychic span { background: #F95587; }
+.bug span { background: #A6B91A; }
+.rock span { background: #B6A136; }
+.ghost span { background: #735797; }
+.dragon span { background: #6F35FC; }
+.dark span { background: #705746; }
+.steel span { background: #B7B7CE; color: #000; }
+.fairy span { background: #D685AD; }
